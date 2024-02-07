@@ -1,6 +1,6 @@
 function PlayerInput() {
   return (
-    <form>
+    <form className="m-8">
       <input type="text" placeholder="Add New Players Here" />
     </form>
   );
