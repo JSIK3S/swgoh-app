@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -6,6 +6,7 @@ import "./index.css";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,6 +21,17 @@ const firebaseConfig = {
 // Initialize Firebase
 // @ts-ignore
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+useEffect(() => {
+  async function fetchData() {
+    const querySnapshot = await getDocs(collection(db, "guild"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+    });
+  }
+  fetchData();
+}, []);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
