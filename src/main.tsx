@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -6,7 +6,7 @@ import "./index.css";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,17 +21,22 @@ const firebaseConfig = {
 // Initialize Firebase
 // @ts-ignore
 const app = initializeApp(firebaseConfig);
+// Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-useEffect(() => {
-  async function fetchData() {
-    const querySnapshot = await getDocs(collection(db, "guild"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
-  }
-  fetchData();
-}, []);
+try {
+  const docRef = await addDoc(collection(db, "users"), {
+    allyCode: "335813917",
+  });
+  console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+  console.error("Error adding document: ", e);
+}
+
+const querySnapshot = await getDocs(collection(db, "users"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${doc.data()}`);
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
