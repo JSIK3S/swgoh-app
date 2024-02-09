@@ -24,14 +24,14 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-try {
-  const docRef = await addDoc(collection(db, "guild"), {
-    allyCode: "335813917",
-  });
-  console.log("Document written with ID: ", docRef.id);
-} catch (e) {
-  console.error("Error adding document: ", e);
-}
+// try {
+//   const docRef = await addDoc(collection(db, "guild"), {
+//     allyCode: "335813917",
+//   });
+//   console.log("Document written with ID: ", docRef.id);
+// } catch (e) {
+//   console.error("Error adding document: ", e);
+// }
 
 const querySnapshot = await getDocs(collection(db, "guild"));
 querySnapshot.forEach((doc) => {
