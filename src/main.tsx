@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 try {
-  const docRef = await addDoc(collection(db, "users"), {
+  const docRef = await addDoc(collection(db, "guild"), {
     allyCode: "335813917",
   });
   console.log("Document written with ID: ", docRef.id);
@@ -33,7 +33,7 @@ try {
   console.error("Error adding document: ", e);
 }
 
-const querySnapshot = await getDocs(collection(db, "users"));
+const querySnapshot = await getDocs(collection(db, "guild"));
 querySnapshot.forEach((doc) => {
   console.log(`${doc.id} => ${doc.data()}`);
 });
