@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { db } from "../firebase.ts";
-import { setDoc, doc } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 function AddPlayer() {
   const [player, setPlayer] = useState("");
@@ -9,42 +9,25 @@ function AddPlayer() {
     setPlayer(event.target.value);
   };
 
-  const handleAddPlayer = async () => {
-    const newPlayer = {
-      allyCode: player,
-    };
-
+  const handleAddPlayer = async (e: FormEvent<HTMLFormElement>) => {
     try {
-      // Add a new document in collection "cities"
-      await setDoc(doc(db, "guild", "123456789"), {
-        ...newPlayer,
-      });
+      e.preventDefault();
+
+      const guildCollectionRef = collection(db, "guild");
+      const newPlayer = {
+        allyCode: player,
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(guildCollectionRef, newPlayer);
+      setPlayer("");
     } catch (error) {
       console.log(error);
     }
-
-    //   addPlayerToGuild(player);
-    //   console.log(player);
-    // };
-
-    // async function addPlayerToGuild(allyCode: string) {
-    //   const guildCollectionRef = collection(db, "guild");
-
-    //   const newPlayer = {
-    //     allyCode,
-    //     createdAt: serverTimestamp(),
-    //   };
-
-    //   try {
-    //     // const playerRef = doc(guildCollectionRef, allyCode);
-    //     await addDoc(guildCollectionRef, newPlayer);
-    //   } catch (e) {
-    //     console.error("Error adding document: ", e);
-    //   }
   };
 
   return (
-    <form className="m-8">
+    <form className="m-8" onSubmit={handleAddPlayer}>
       <input
         type="text"
         placeholder="Enter Ally Code Here"
@@ -53,7 +36,7 @@ function AddPlayer() {
       />
       <button
         className="text-white border-2 border-black px-1 py-1 m-2 rounded"
-        onClick={handleAddPlayer}
+        type="submit"
       >
         Add Player
       </button>
