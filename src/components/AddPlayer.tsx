@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { db } from "../firebase.ts";
-import { addDoc, collection } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 
 function AddPlayer() {
   const [player, setPlayer] = useState("");
@@ -15,7 +15,8 @@ function AddPlayer() {
     };
 
     try {
-      await addDoc(collection(db, "guild"), {
+      // Add a new document in collection "cities"
+      await setDoc(doc(db, "guild"), {
         ...newPlayer,
       });
     } catch (error) {
