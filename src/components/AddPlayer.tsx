@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { db } from "../firebase.ts";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 
 function AddPlayer() {
   const [player, setPlayer] = useState("");
@@ -13,13 +13,12 @@ function AddPlayer() {
     try {
       e.preventDefault();
 
-      const guildCollectionRef = collection(db, "guild");
       const newPlayer = {
         allyCode: player,
         createdAt: serverTimestamp(),
       };
 
-      await addDoc(guildCollectionRef, newPlayer);
+      await setDoc(doc(db, "guild", player), newPlayer);
       setPlayer("");
     } catch (error) {
       console.log(error);
