@@ -1,6 +1,6 @@
 import { useState } from "react";
 import db from "../firebase.ts";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 function AddPlayer() {
   const [player, setPlayer] = useState("");
