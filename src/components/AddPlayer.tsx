@@ -16,7 +16,7 @@ function AddPlayer() {
 
     try {
       // Add a new document in collection "cities"
-      await setDoc(doc(db, "guild"), {
+      await setDoc(doc(db, "guild", "123456789"), {
         ...newPlayer,
       });
     } catch (error) {
