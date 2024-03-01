@@ -1,5 +1,5 @@
 import { useState } from "react";
-import db from "../firebase.ts";
+import { db } from "../firebase.ts";
 import { addDoc, collection } from "firebase/firestore";
 
 function AddPlayer() {

@@ -1,5 +1,5 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
-import db from "../firebase.ts";
+import { db } from "../firebase.ts";
 import { useEffect, useState } from "react";
 
 function GuildMembers() {
